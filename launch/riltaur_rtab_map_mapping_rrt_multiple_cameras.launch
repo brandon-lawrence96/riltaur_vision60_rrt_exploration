@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <arg name="database_path"     default="rtabmap.db"/>
+  <!-- <arg name="database_path"     default="rtabmap.db"/> -->
+  <arg name="args"              default=""/>
+  
+  <arg name="wait_for_transform"  default="0.2"/>
+
+  <!-- sync rgb/depth images per camera -->
+  <group ns="camera_1">
+    <node pkg="nodelet" type="nodelet" name="nodelet_manager1" args="manager"/>
+    <node pkg="nodelet" type="nodelet" name="rgbd_sync1" args="load rtabmap_ros/rgbd_sync nodelet_manager1">
+      <remap from="rgb/image"       to="color/image_raw"/>
+      <remap from="depth/image"     to="depth/image_raw"/>
+      <remap from="rgb/camera_info" to="color/camera_info"/>
+      <param name="approx_sync"          value="false"/>
+    </node>
+  </group>
+  
+  <group ns="camera_2">
+    <node pkg="nodelet" type="nodelet" name="nodelet_manager2" args="manager"/>
+    <node pkg="nodelet" type="nodelet" name="rgbd_sync2" args="load rtabmap_ros/rgbd_sync nodelet_manager2">
+      <remap from="rgb/image"       to="color/image_raw"/>
+      <remap from="depth/image"     to="depth/image_raw"/>
+      <remap from="rgb/camera_info" to="color/camera_info"/>
+      <param name="approx_sync"          value="false"/>
+    </node>
+  </group>
+
+  <group ns="/robot_1">
+    <include file="$(find riltaur_rrt_exploration)/launch/includes/move_base.launch">
+      <arg name="namespace" value="robot_1"/>
+      <!--<arg name="database_path"     default="rtabmap.db"/>
+      <arg name="args"              default=""/>
+      <arg name="wait_for_transform"  default="0.2"/> -->
+    </include> 
+  </group>
+
+  <group ns="rtabmap">
+    <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="$(arg args)">
+      <param name="database_path"       type="string" value="$(arg database_path)"/>
+      <param name="frame_id"            type="string" value="robot_1/base_footprint"/>
+      <param name="odom_frame_id"       type="string" value="robot_1/odom"/>
+      <param name="wait_for_transform_duration"  type="double"   value="$(arg wait_for_transform)"/>
+      <param name="subscribe_depth"     type="bool"   value="true"/>
+      <param name="subscribe_scan"      type="bool"   value="true"/>
+      <param name="approx_sync"          type="bool"   value="true"/>
+
+      <param name="map_frame_id"         type="string" value="robot_1/map"/>
+      <!--<param name="queue_size"           type="int" value="100"/> 
+      <param name="publish_tf"           type="bool"   value="false"/>
+      
+      <param name="landmark_linear_variance"   type="double" value="0.0001"/>
+      <param name="landmark_angular_variance"  type="double" value="9999"/> -->
+
+    
+      <!-- inputs -->
+      
+      
+      <!-- output -->
+      <remap from="grid_map" to="/map"/> 
+    
+      <!-- RTAB-Map's parameters: do "rosrun rtabmap rtabmap (double-dash)params" to see the list of available parameters. -->
+      <param name="RGBD/ProximityBySpace"        type="string" value="true"/>   
+      <param name="RGBD/OptimizeFromGraphEnd"    type="string" value="false"/>  
+      <param name="Kp/MaxDepth"                  type="string" value="4.0"/>
+      <param name="Reg/Strategy"                 type="string" value="1.0"/>       <!-- #1 >-->      
+      <param name="Icp/CoprrespondenceRatio"     type="string" value="0.15"/>
+      <param name="Vis/MinInliers"               type="string" value="50"/>        <!-- #5.0 >-->
+      <param name="Vis/InlierDistance"           type="string" value="0.1"/>    
+      <param name="RGBD/AngularUpdate"           type="string" value="0.1"/>    
+      <param name="RGBD/LinearUpdate"            type="string" value="0.1"/>    
+      <param name="Rtabmap/TimeThr"              type="string" value="0"/>
+      <param name="Mem/RehearsalSimilarity"      type="string" value="0.30"/>
+      <!-- <param name="Optimizer/Slam2D"             type="string" value="true"/> -->
+      <param name="Reg/Force3DoF"                type="string" value="true"/>
+      <param name="Grid/FromDepth"               type="string" value="false"/>
+      <param name="RGBD/ProximityPathMaxNeighbors" type="string" value="10"/>
+
+      <param name="scan_normal_k"		type="double" value="0"/>
+
+      <param name="rgbd_cameras"     type="int"    value="2"/>
+      <param name="gen_scan"         type="bool"   value="true"/>
+      <param name="Vis/EstimationType" type="string" value="0"/> <!-- should be 0 for multi-cameras -->
+      <param name="map_negative_poses_ignored" type="bool"   value="false"/>        <!-- refresh grid map even if we are not moving-->
+      <param name="map_negative_scan_empty_ray_tracing" type="bool" value="false"/> <!-- don't fill empty space between the generated scans-->
+
+
+      <!-- param name="Grid/FromDepth"            type="string" value="false"/ 
+       <param name="RGBD/ProximityPathMaxNeighbors" type="string" value="10"/>   
+      <param name="Odom/Strategy"              value="1"/>
+      <param name="Vis/Cortype"                value="1"/>
+      <param name="GFTT/MinDistance"             type="string" value="10"/>
+      <param name="grid_size"                    type="double" value="50"/>
+      <param name="cloud_noise_filtering_radius" value="0.05"/>
+      <param name="cloud_noise_filtering_min_neighbors" value="2"/>
+      <param name="proj_max_ground_angle" value="45"/>
+      <param name="proj_max_ground_height" value="0.1"/>
+      <param name="proj_max_height" value="2.0"/>
+      <param name="proj_min_cluster_size" value="20"/> -->
+      <remap from="scan"            to="/robot_1/scan"/>
+      <remap from="rgbd_image0"      to="/camera_1/rgbd_image"/>
+      <remap from="rgbd_image1"      to="/camera_2/rgbd_image"/> 
+
+      <!-- param name="Mem/IncrementalMemory"        type="string" value="true"/>  -->
+
+    </node>
+  </group>
+</launch>

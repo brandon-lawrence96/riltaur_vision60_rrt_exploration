@@ -1,0 +1,15 @@
+<launch>
+  <arg name="robot_name"/>
+  <!-- <arg name="new_joint_states"/> -->
+  <!-- <arg name="init_pose"/> -->
+  <!-- <arg name="model" default="riltaur"/> -->
+  
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+    respawn="false" output="screen">
+    <!-- <remap from="/joint_states" to="$(arg new_joint_states)" /> -->
+    <param name="publish_frequency" type="double" value="30.0" />
+    <!-- <param name="use_tf_static" type="bool" value="false" /> -->
+    <param name="tf_prefix" type="string" value="$(arg robot_name)"/>
+  </node>
+
+</launch>

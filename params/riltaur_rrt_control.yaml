@@ -1,0 +1,49 @@
+robot_1:
+  # Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 100  
+
+  # Position Controllers ---------------------------------------
+  leg0_motor0_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: joint_leg0_motor0_link1
+    pid: {p: 15, i: 0.0, d: 0.2}
+
+  leg0_motor1_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: joint_leg0_motor1_link1
+    pid: {p: 15, i: 0.0, d: 0.2}
+
+
+  leg1_motor0_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: joint_leg1_motor0_link1
+    pid: {p: 15, i: 0.0, d: 0.2}
+
+  leg1_motor1_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: joint_leg1_motor1_link1
+    pid: {p: 15, i: 0.0, d: 0.2}
+  
+  
+  leg2_motor0_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: joint_leg2_motor0_link1
+    pid: {p: 15, i: 0.0, d: 0.2}
+
+  leg2_motor1_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: joint_leg2_motor1_link1
+    pid: {p: 15, i: 0.0, d: 0.2}
+
+  
+  leg3_motor0_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: joint_leg3_motor0_link1
+    pid: {p: 15, i: 0.0, d: 0.2}
+
+  leg3_motor1_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: joint_leg3_motor1_link1
+    pid: {p: 15, i: 0.0, d: 0.2}

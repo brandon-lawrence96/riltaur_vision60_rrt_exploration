@@ -1,0 +1,10 @@
+<launch>
+
+  <!-- transformation between robots-->
+  <node pkg="tf" type="static_transform_publisher" name="robot2_to_robot1" args="7.0 0 0 0 0 0 /robot_1/map /robot_2/map 100" />
+
+  <!-- Map megring (know inital position case)-->
+  <include file="$(find riltaur_rrt_exploration)/launch/includes/initposes.launch"/>
+  <include file="$(find riltaur_rrt_exploration)/launch/includes/map_merge.launch"/>
+    
+</launch>
