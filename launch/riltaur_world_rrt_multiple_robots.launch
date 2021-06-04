@@ -1,0 +1,42 @@
+<launch>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <!-- <arg name="world_name" value="$(find autonomous_robots)/world/turtlebot3_house.world"/>  -->
+    <!-- <arg name="world_name" value="$(find autonomous_robots)/world/rtab_map_navigation_test_3.world"/> -->
+    <!-- <arg name="world_name" value="$(find riltaur_gazebo)/worlds/myworld.world"/> -->
+    <arg name="world_name" value="$(find riltaur_gazebo)/worlds/turtlebot3_house.world"/>
+    <arg name="paused" value="true"/>
+    <!--<arg name="use_sim_time" value="true"/>
+    <arg name="debug" value="false"/> -->
+  </include>
+
+  <!-- <node
+    name="tf_footprint_base"
+    pkg="tf"
+    type="static_transform_publisher"
+    args="0 0 0 0 0 0 base_link base_footprint 40" /> -->
+
+
+  <group ns="robot_1">
+    <include file="$(find riltaur_rrt_exploration)/launch/includes/multiple_robots.launch.xml">
+      <arg name="robot_name" value="robot_1"/>
+      <arg name="init_pose" value="-x -2.0 -y 1.0 -z 0.2 -Y -1.57079632679"/>
+    </include>
+  </group>
+
+  <group ns="robot_2">
+    <include file="$(find riltaur_rrt_exploration)/launch/includes/multiple_robots.launch.xml">
+      <arg name="robot_name" value="robot_2"/>
+      <arg name="init_pose" value="-x 5.0 -y 1.0 -z 0.2 -Y -1.57079632679"/>
+    </include>
+  </group>
+
+   
+
+  <!-- <node
+    name="fake_joint_calibration"
+    pkg="rostopic"
+    type="rostopic"
+    args="pub /calibrated std_msgs/Bool true" /> -->
+    
+</launch>

@@ -1,0 +1,6 @@
+<launch>
+
+  <node name="forced_exploration_node" pkg="riltaur_rrt_exploration" type="riltaur_rrt_forced_exploration.py" output="screen"/>
+  
+</launch>
+

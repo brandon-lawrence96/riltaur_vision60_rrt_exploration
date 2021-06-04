@@ -1,0 +1,31 @@
+<launch>
+  
+  <group ns="robot_1">
+    <include file="$(find riltaur_rrt_exploration)/launch/riltaur_control_rrt_2_multiple_robots.launch">
+      <arg name="robot_name" value="robot_1"/>
+      <!-- <arg name="new_joint_states" value="/robot_1/joint_states"/> -->
+      <!-- <arg name="init_pose" value="-x -2.0 -y 1.0 -z 0.2"/> -->
+    </include>
+  </group>
+
+  <group ns="robot_2">
+    <include file="$(find riltaur_rrt_exploration)/launch/riltaur_control_rrt_2_multiple_robots.launch">
+      <arg name="robot_name" value="robot_2"/>
+      <!-- <arg name="new_joint_states" value="/robot_1/joint_states"/> -->
+      <!-- <arg name="init_pose" value="-x -2.0 -y 1.0 -z 0.2"/> -->
+    </include>
+  </group>
+
+  <!-- <include file="$(find riltaur_rrt_exploration)/launch/riltaur_rtab_map_mapping_rrt.launch"/> -->
+
+  
+  
+
+  <node name="sim_odom_converter" pkg="riltaur_rrt_exploration" type="sim_odom_converter_robot_1.py" output="screen"/>
+  <node name="sim_odom_converter_2" pkg="riltaur_rrt_exploration" type="sim_odom_converter_robot_2.py" output="screen"/>
+
+  <node name="dummy_to_base_tf" pkg="tf" type="static_transform_publisher" args="0 0 0.17 0 0 -0.7071068 0.7071068 robot_1/base_footprint robot_1/base_link 100" />
+  <node name="dummy_to_base_tf_2" pkg="tf" type="static_transform_publisher" args="0 0 0.17 0 0 -0.7071068 0.7071068 robot_2/base_footprint robot_2/base_link 100" /> 
+
+
+</launch>

@@ -1,0 +1,42 @@
+<launch>
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find riltaur_rrt_exploration)/params/riltaur_rrt_control.yaml" command="load"/>
+
+  <!-- load the controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/robot_1" 
+    args=
+      "joint_state_controller
+       leg0_motor0_position_controller 
+       leg0_motor1_position_controller 
+       leg1_motor0_position_controller 
+       leg1_motor1_position_controller 
+       leg2_motor0_position_controller 
+       leg2_motor1_position_controller 
+       leg3_motor0_position_controller 
+       leg3_motor1_position_controller" />
+
+
+  <group ns="/robot_1">
+    <include file="$(find riltaur_rrt_exploration)/launch/riltaur_control_rrt_2.launch">
+      <arg name="robot_name" value="robot_1"/>
+      <!-- <arg name="init_pose" value="-x -2.0 -y 1.0 -z 0.2"/> -->
+    </include>
+  </group>
+
+  <!-- <include file="$(find riltaur_rrt_exploration)/launch/riltaur_rtab_map_mapping_rrt.launch"/> -->
+
+  
+  
+
+  <node name="sim_odom_converter" pkg="riltaur_rrt_exploration" type="sim_odom_converter.py" output="screen"/>
+  <node name="dummy_to_base_tf" pkg="tf" type="static_transform_publisher" args="0 0 0.17 0 0 -0.7071068 0.7071068 robot_1/base_footprint robot_1/base_link 100" />
+  
+
+
+</launch>
+
+
+
+
+

@@ -1,0 +1,42 @@
+<launch>
+  <arg name="robot_name"/>
+  <arg name="init_pose"/>
+  <!--<arg name="model" default="riltaur"/> -->
+  
+  <param name="robot_description" 
+        command="$(find xacro)/xacro $(find riltaur_rrt_exploration)/urdf/riltaur_rrt.urdf_unedited_multiple_robots.xacro robot_name:=$(arg robot_name)" />
+  
+    
+
+
+  <!-- For Multiple Cameras -->
+  <!--<param name="robot_description"
+         command="$(find xacro)/xacro $(find riltaur_rrt_exploration)/urdf/riltaur_rrt.urdf_unedited_multiple_cameras.xacro"/> -->
+
+  <node
+    name="spawn_$(arg robot_name)"
+    pkg="gazebo_ros"
+    type="spawn_model"
+    args="-urdf $(arg init_pose) -param robot_description -model $(arg robot_name)"
+    output="screen" />
+
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find riltaur_rrt_exploration)/params/riltaur_rrt_control_multiple_robots.yaml" command="load"/>
+
+  <!-- load the controllers -->
+  <node name="controller_spawner_$(arg robot_name)" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen"
+    args=
+      "joint_state_controller
+       leg0_motor0_position_controller 
+       leg0_motor1_position_controller 
+       leg1_motor0_position_controller 
+       leg1_motor1_position_controller 
+       leg2_motor0_position_controller 
+       leg2_motor1_position_controller 
+       leg3_motor0_position_controller 
+       leg3_motor1_position_controller" />
+
+  
+
+</launch>

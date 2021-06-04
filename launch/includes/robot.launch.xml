@@ -1,0 +1,24 @@
+<launch>
+  <arg name="robot_name"/>
+  <!-- <arg name="init_pose"/> -->
+  <!--<arg name="model" default="riltaur"/> -->
+  
+  <param name="robot_description"
+         command="$(find xacro)/xacro $(find riltaur_rrt_exploration)/urdf/riltaur_rrt.urdf_unedited.xacro"/> 
+
+  <!-- For Multiple Cameras -->
+  <!--<param name="robot_description"
+         command="$(find xacro)/xacro $(find riltaur_rrt_exploration)/urdf/riltaur_rrt.urdf_unedited_multiple_cameras.xacro"/> -->
+
+  <node
+    name="spawn_$(arg robot_name)"
+    pkg="gazebo_ros"
+    type="spawn_model"
+    args="-urdf -x -2.0 -y 1.0 -z 0.2 -Y -1.57079632679 -param robot_description -model $(arg robot_name)"
+    output="screen" />
+
+  
+
+</launch>
+
+  
