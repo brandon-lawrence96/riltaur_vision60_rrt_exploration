@@ -1,0 +1,24 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/abhinux/Projects/Vision60/ghost_ws/devel/include/**",
+        "/home/abhinux/Projects/RILTaur/riltaur_ws/devel/include/**",
+        "/opt/ros/melodic/include/**",
+        "/home/abhinux/Projects/Vision60/ghost_ws/src/azure_spatial_anchors_ros/asa_ros/include/**",
+        "/home/abhinux/Projects/Vision60/ghost_ws/src/autonomous_robots/include/**",
+        "/home/abhinux/Projects/Vision60/ghost_ws/src/image_undistort/include/**",
+        "/home/abhinux/Projects/Vision60/ghost_ws/src/mavlink_bridge/include/**",
+        "/home/abhinux/Projects/Vision60/ghost_ws/src/mjpeg_client/include/**",
+        "/home/abhinux/Projects/Vision60/ghost_ws/src/realsense-ros/realsense2_camera/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ],
+  "version": 4
+}
