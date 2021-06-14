@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+  <group ns="/vision60_1">
+    <include file="$(find riltaur_rrt_exploration)/launch/includes/vision60_move_base_multiple_robots.launch">
+      <arg name="namespace" value="vision60_1"/>
+    </include>
+  </group>
+
+  <group ns="/vision60_2">
+    <include file="$(find riltaur_rrt_exploration)/launch/includes/vision60_move_base_multiple_robots.launch">
+      <arg name="namespace" value="vision60_2"/>
+    </include>
+  </group>
+
+
+
+</launch>

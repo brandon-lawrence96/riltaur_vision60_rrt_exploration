@@ -2,8 +2,8 @@
 
 <launch>
 
-    <node name="velocity_converter_vision60_1" pkg="riltaur_rrt_exploration" type="xbox_controller_converter_vision60_1.py" output="screen"/> 
-    <!--<node name="velocity_converter_vision60_2" pkg="riltaur_rrt_exploration" type="xbox_controller_converter_vision60_2.py" output="screen"/> -->
+    <!-- <node name="velocity_converter_vision60_1" pkg="riltaur_rrt_exploration" type="xbox_controller_converter_vision60_1.py" output="screen"/> -->  
+    <node name="velocity_converter_vision60_2" pkg="riltaur_rrt_exploration" type="xbox_controller_converter_vision60_2.py" output="screen"/> 
 
 
 </launch>

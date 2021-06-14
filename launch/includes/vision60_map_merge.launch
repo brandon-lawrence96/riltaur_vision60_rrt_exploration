@@ -11,6 +11,10 @@
       <param name="discovery_rate" value="0.05"/>
       <param name="estimation_rate" value="0.5"/>
       <param name="estimation_confidence" value="1.0"/>
+
+      <!-- remap the individual maps from the local map (published by SLAM) to the expanded map (published by the map_expansion node)-->
+      <remap from = "/vision_1/map" to = "/new_vision60_1/map"/>
+      <remap from = "/vision_2/map" to = "/new_vision60_2/map"/>
     </node>
   </group>
   

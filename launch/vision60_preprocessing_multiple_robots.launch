@@ -1,13 +1,27 @@
 <launch>
 
   <!-- transformation between robots-->
-  <node pkg="tf" type="static_transform_publisher" name="map_to_vision60_1_map" args="-2.0 1.0 0 0 0 0 map vision60_1/map 100" />
-  <node pkg="tf" type="static_transform_publisher" name="map_to_vision60_2_map" args="5.0 1.0 0 0 0 0 map vision60_2/map 100" /> 
+  <node pkg="tf" type="static_transform_publisher" name="map_to_vision60_1_map" args="0 0 0 0 0 0 map vision60_1/map 100" />
+  <node pkg="tf" type="static_transform_publisher" name="map_to_vision60_2_map" args="0 0 0 0 0 0 map vision60_2/map 100" /> 
+  
+  <!-- <node pkg="tf" type="static_transform_publisher" name="map_to_vision60_1_map" args="-2.0 1.0 0 0 0 0 map vision60_1/map 100" />
+  <node pkg="tf" type="static_transform_publisher" name="map_to_vision60_2_map" args="5.0 1.0 0 0 0 0 map vision60_2/map 100" />  -->
+  
   <!-- <node pkg="tf" type="static_transform_publisher" name="vision60_1_to_vision60_2_3" args="-1.85 1.97 0 0 0 0 map map_merged 100" /> -->
   <!-- <node pkg="tf" type="static_transform_publisher" name="vision60_1_to_vision60_2" args="7.0 0 0 0 0 0 vision60_1/map vision60_2/map 100" /> --> 
 
+  <!-- Run the map expansion node -->
+  <node pkg="riltaur_rrt_exploration" type="map_node" name="map_expansion_node"/>
+
+  <node pkg="tf" type="static_transform_publisher" name="map_to_new_vision60_1_map" args="0 0 0 0 0 0 map new_vision60_1/map 100" />
+  <node pkg="tf" type="static_transform_publisher" name="map_to_new_vision60_2_map" args="0 0 0 0 0 0 map new_vision60_2/map 100" /> 
+
+  <!-- Run the map merger node -->
+  <!-- <node pkg="riltaur_rrt_exploration" type="merger_node" name="map_merger_node"/> -->
+  <node name="map_merger_node" pkg="riltaur_rrt_exploration" type="vision60_map_merger.py" output="screen"/>
+
   <!-- Map megring (know inital position case)-->
-  <include file="$(find riltaur_rrt_exploration)/launch/includes/vision60_initposes.launch"/>
-  <include file="$(find riltaur_rrt_exploration)/launch/includes/vision60_map_merge.launch"/>
+  <!-- <include file="$(find riltaur_rrt_exploration)/launch/includes/vision60_initposes.launch"/>
+  <include file="$(find riltaur_rrt_exploration)/launch/includes/vision60_map_merge.launch"/> -->
     
 </launch>
